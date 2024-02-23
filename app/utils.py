@@ -30,4 +30,4 @@ def update_plot(y_third, x_tangent):
     
     tangent_line, slope_values = tangent(x_tangent, x_values, interp_func)
 
-    return x_values, y_values, tangent_line, slope_values
+    return x_values, y_values, interp_func, tangent_line, slope_values
