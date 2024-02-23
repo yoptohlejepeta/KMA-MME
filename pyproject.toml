@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "mme"
+version = "0.1.0"
+description = ""
+authors = ["yoptohlejepeta <peta.kotlan@seznam.cz>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+streamlit = "^1.31.1"
+ipykernel = "^6.29.2"
+plotly = "^5.19.0"
+numpy = "^1.26.4"
+nbformat = "^5.9.2"
+sympy = "^1.12"
+scipy = "^1.12.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
