@@ -9,8 +9,11 @@ def tangent(x, x_values, f):
     diff = sp.diff(f(sp.Symbol("x")), sp.Symbol("x"))
     f_prime = sp.lambdify(sp.Symbol("x"), diff)
     slope = f_prime(x)
-
-    return slope * (x_values - x) + y
+    
+    line = slope * (x_values - x) + y
+    slope_values = [f_prime(x) for x in x_values]
+    
+    return line, slope_values
 
 
 @st.cache_data(ttl=600, max_entries=10, show_spinner=True)
@@ -25,6 +28,6 @@ def update_plot(y_third, x_tangent):
     x_values = np.linspace(0, 20, 100)
     y_values = interp_func(x_values)
     
-    tangent_line = tangent(x_tangent, x_values, interp_func)
+    tangent_line, slope_values = tangent(x_tangent, x_values, interp_func)
 
-    return x_values, y_values, tangent_line
+    return x_values, y_values, tangent_line, slope_values

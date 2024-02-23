@@ -24,7 +24,7 @@ col1, col2 = st.columns(2)
 point = col1.slider("Vyber bod", 10, 25, 10)
 x_tangent = col2.slider("Vyber bod pro tečnu", 5, 15, 10)
 
-x_values, y_values, tangent_line = update_plot(point, x_tangent)
+x_values, y_values, tangent_line, slope_values = update_plot(point, x_tangent)
 
 fig = px.line(x=x_values, y=y_values, labels={"x": "x", "y": "f(x)"}, template="simple_white")
 fig.update_layout(xaxis=dict(range=[0, 20]), yaxis=dict(range=[0, 20]))
@@ -33,4 +33,19 @@ fig.add_scatter(
     x=x_values, y=tangent_line, mode="lines", line=dict(color="#D53D59", width=2), showlegend=False
 )
 
-st.plotly_chart(fig, )
+st.plotly_chart(fig, use_container_width=True)
+
+fig = px.line(x=x_values, y=slope_values, labels={"x": "x", "y": "f'(x)"}, template="simple_white", title="Monotonnost sklonu")
+fig.update_layout(xaxis=dict(range=[0, 20]), yaxis=dict(range=[0, 3]))
+fig.update_traces(line_color="orange")
+
+st.plotly_chart(fig, use_container_width=True)
+
+with st.expander("Pravidla pro poznávání mezního sklonu funkce"):
+    st.markdown("""
+                - Rostoucí funkce má sklon kladný.
+                - Klesající funkce má sklon záporný.
+                - Lineární funkce má konstantní sklon.
+                - Konvexní funkce má rostoucí sklon.
+                - Konkávní funkce má klesající sklon.
+                """)
