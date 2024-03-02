@@ -89,6 +89,7 @@ with st.expander("Pravidla pro poznávání mezního sklonu funkce"):
 st.divider()
 
 st.header("Veličiny celkové, průměrné a mezní", anchor="veliciny")
+st.subheader("Celkové náklady")
 
 col1, col2, col3, col4 = st.columns(4)
 
@@ -115,3 +116,5 @@ fig.add_scatter(x=[ac_x[min_ac]], y=[AC[min_ac]], mode="markers", marker=dict(co
 fig.add_scatter(x=[ac_x[min_mc]], y=[MC[min_mc]], mode="markers", marker=dict(color="red", size=10), name="min MC", showlegend=False)
 
 st.plotly_chart(fig, use_container_width=True, config={"staticPlot": True})
+
+st.subheader("Celkové příjmy")
