@@ -2,11 +2,12 @@ import streamlit as st
 import plotly.express as px
 from pathlib import Path
 
-from utils import update_plot, TC
+from utils import update_plot, TC, TR
 
 st.set_page_config(
     page_title="KMA/MME",
     page_icon="💰",
+    initial_sidebar_state="collapsed",
     layout="centered",
     menu_items={
         "Get Help": "https://www.kma-mme.com",
@@ -18,7 +19,6 @@ st.set_page_config(
 st.title("Matematika v mikroekonomii")
 
 with st.sidebar:
-    st.title("Obsah")
     st.markdown("# [Mezní sklon](#mezni-sklon)")
     st.markdown("# [Veličiny celkové, průměrné a mezní](#veliciny)")
     
@@ -93,18 +93,18 @@ st.subheader("Celkové náklady")
 
 col1, col2, col3, col4 = st.columns(4)
 
-a = col1.number_input("a", value=1)
-b = col2.number_input("b", value=-10)
-c = col3.number_input("c", value=50)
-d = col4.number_input("d", value=100)
+a_tc = col1.number_input("$a$", value=1, key="a_tc")
+b_tc = col2.number_input("$b$", value=-10, key="b_tc")
+c_tc = col3.number_input("$c$", value=50, key="c_tc")
+d_tc = col4.number_input("$d$", value=100, key="d_tc", help="fixní náklady")
 
 st.write("Celkové náklady jsou dány předpisem:")
-st.latex(f"TC = {a}Q^3 + {b}Q^2 + {c}Q + {d}")
+st.latex(f"TC = {a_tc}Q^3 + {b_tc}Q^2 + {c_tc}Q + {d_tc}")
 
-x, y, AC, min_ac, MC, min_mc, ac_x = TC(a, b, c, d, 10)
+x, y, AC, min_ac, MC, min_mc, ac_x = TC(a_tc, b_tc, c_tc, d_tc, 10)
 
 fig = px.line(
-    x=x, y=y, labels={"x": "Q", "y": "TC(Q)"}, template="simple_white", title="Celkové náklady"
+    x=x, y=y, labels={"x": "Q", "y": "TC(Q)"}, template="simple_white"
 )
 fig.update_layout(xaxis=dict(range=[0, 10]))
 fig.update_traces(line_color="#3dd56d")
@@ -118,3 +118,30 @@ fig.add_scatter(x=[ac_x[min_mc]], y=[MC[min_mc]], mode="markers", marker=dict(co
 st.plotly_chart(fig, use_container_width=True, config={"staticPlot": True})
 
 st.subheader("Celkové příjmy")
+
+col1, col2, col3 = st.columns(3)
+
+a_tr = col1.number_input("$a$", value=-5, key="a_tr")
+b_tr = col2.number_input("$b$", value=50, key="b_tr")
+c_tr = col3.number_input("$c$", value=100, key="c_tr")
+
+st.write("Celkové příjmy jsou dány předpisem:")
+st.latex(f"TR = {a_tr}Q^3 + {b_tr}Q^2 + {c_tr}Q")
+
+x, y, AR, max_ar, MR, max_mr, _x = TR(a_tr, b_tr, c_tr, 10)
+
+fig = px.line(
+    x=x, y=y, labels={"x": "Q", "y": "TR(Q)"}, template="simple_white"
+)
+fig.update_layout(xaxis=dict(range=[0, 10]))
+fig.update_traces(line_color="#3dd56d")
+
+fig.add_scatter(x=_x, y=AR, mode="lines", line=dict(color="orange", width=2), name="AR", showlegend=False)
+fig.add_scatter(x=_x, y=MR, mode="lines", line=dict(color="red", width=2), name="MR", showlegend=False)
+
+fig.add_scatter(x=[_x[max_ar]], y=[AR[max_ar]], mode="markers", marker=dict(color="orange", size=10), name="max AR", showlegend=False)
+fig.add_scatter(x=[_x[max_mr]], y=[MR[max_mr]], mode="markers", marker=dict(color="red", size=10), name="max MR", showlegend=False)
+
+st.plotly_chart(fig, use_container_width=True, config={"staticPlot": True})
+
+st.divider()
