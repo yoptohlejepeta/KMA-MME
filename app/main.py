@@ -2,7 +2,7 @@ import streamlit as st
 import plotly.express as px
 from pathlib import Path
 
-from utils import update_plot, tangent
+from utils import update_plot, TC
 
 st.set_page_config(
     page_title="KMA/MME",
@@ -17,7 +17,14 @@ st.set_page_config(
 
 st.title("Matematika v mikroekonomii")
 
-st.header("Mezní sklon", anchor="mezní-sklon")
+with st.sidebar:
+    st.title("Obsah")
+    st.markdown("# [Mezní sklon](#mezni-sklon)")
+    st.markdown("# [Veličiny celkové, průměrné a mezní](#veliciny)")
+    
+    
+
+st.header("Mezní sklon", anchor="mezni-sklon")
 
 col1, col2 = st.columns(2)
 
@@ -78,3 +85,33 @@ with st.expander("Pravidla pro poznávání mezního sklonu funkce"):
                 - Konkávní funkce má klesající sklon.
                 """
     )
+
+st.divider()
+
+st.header("Veličiny celkové, průměrné a mezní", anchor="veliciny")
+
+col1, col2, col3, col4 = st.columns(4)
+
+a = col1.number_input("a", value=1)
+b = col2.number_input("b", value=-10)
+c = col3.number_input("c", value=50)
+d = col4.number_input("d", value=100)
+
+st.write("Celkové náklady jsou dány předpisem:")
+st.latex(f"TC = {a}Q^3 + {b}Q^2 + {c}Q + {d}")
+
+x, y, AC, min_ac, MC, min_mc, ac_x = TC(a, b, c, d, 10)
+
+fig = px.line(
+    x=x, y=y, labels={"x": "Q", "y": "TC(Q)"}, template="simple_white", title="Celkové náklady"
+)
+fig.update_layout(xaxis=dict(range=[0, 10]))
+fig.update_traces(line_color="#3dd56d")
+
+fig.add_scatter(x=x, y=AC, mode="lines", line=dict(color="orange", width=2), name="AC", showlegend=False)
+fig.add_scatter(x=x, y=MC, mode="lines", line=dict(color="red", width=2), name="MC", showlegend=False)
+
+fig.add_scatter(x=[ac_x[min_ac]], y=[AC[min_ac]], mode="markers", marker=dict(color="orange", size=10), name="min AC", showlegend=False)
+fig.add_scatter(x=[ac_x[min_mc]], y=[MC[min_mc]], mode="markers", marker=dict(color="red", size=10), name="min MC", showlegend=False)
+
+st.plotly_chart(fig, use_container_width=True, config={"staticPlot": True})
