@@ -33,10 +33,7 @@ x_tangent = col2.slider("Tečna v bodě", 5, 15, 10)
 
 x_values, y_values, f, tangent_line, slope_values = update_plot(point, x_tangent)
 
-col1.write("🟢 **Funkce**")
-subcol1, subcol2 = col2.columns(2)
-subcol1.write("🔴 **Tečna**")
-tecna = subcol2.toggle("Zobrazit tečnu",)
+tecna = st.toggle("Zobrazit tečnu",)
 
 fig = px.line(
     x=x_values, y=y_values, labels={"x": "x", "y": "f(x)"}, template="simple_white"
@@ -50,14 +47,14 @@ if tecna:
         x=x_values,
         y=tangent_line,
         mode="lines",
-        line=dict(color="#D53D59", width=2),
+        line=dict(color="red", width=2),
         showlegend=False,
     )
     fig.add_scatter(
         x=[x_tangent],
         y=[f(x_tangent)],
         mode="markers",
-        marker=dict(color="#D53D59", size=10),
+        marker=dict(color="red", size=10),
         showlegend=False,
     )
 
