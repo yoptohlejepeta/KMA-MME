@@ -58,9 +58,9 @@ def TC(a: float, b: float, c: float, d: float, x_max: int):
     def f(x):
         return a * x ** 3 + b * x ** 2 + c * x + d
     
-    x = np.linspace(0, x_max, 100)
+    x = np.linspace(0, x_max, 10000)
     y = f(x)
-    _x = np.linspace(1, x_max, 100)
+    _x = np.linspace(1, x_max, 10000)
     
     AC = f(_x)/_x
     min_ac = AC.argmin()
@@ -97,8 +97,8 @@ def TR(a: float, b: float, c: float, x_max: int):
     def f(x):
         return a * x**3 + b * x**2 + c * x
 
-    x = np.linspace(0, x_max, 1000)
-    _x = np.linspace(1, x_max, 1000)
+    x = np.linspace(0, x_max, 10000)
+    _x = np.linspace(1, x_max, 10000)
     y = f(x)
 
     AR = f(_x) / _x

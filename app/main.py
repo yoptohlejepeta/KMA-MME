@@ -109,11 +109,18 @@ fig = px.line(
 fig.update_layout(xaxis=dict(range=[0, 10]))
 fig.update_traces(line_color="#3dd56d")
 
+# AC
 fig.add_scatter(x=x, y=AC, mode="lines", line=dict(color="orange", width=2), name="AC", showlegend=False)
-fig.add_scatter(x=x, y=MC, mode="lines", line=dict(color="red", width=2), name="MC", showlegend=False)
-
 fig.add_scatter(x=[ac_x[min_ac]], y=[AC[min_ac]], mode="markers", marker=dict(color="orange", size=10), name="min AC", showlegend=False)
+fig.add_vline(x=ac_x[min_ac], line_width=1, line_dash="dash", line_color="orange", showlegend=False)
+
+# MC
+fig.add_scatter(x=x, y=MC, mode="lines", line=dict(color="red", width=2), name="MC", showlegend=False)
 fig.add_scatter(x=[ac_x[min_mc]], y=[MC[min_mc]], mode="markers", marker=dict(color="red", size=10), name="min MC", showlegend=False)
+fig.add_vline(x=ac_x[min_mc], line_width=1, line_dash="dash", line_color="red", showlegend=False)
+
+# y=0
+fig.add_hline(y=0, line_width=1, line_color="white", showlegend=False)
 
 st.plotly_chart(fig, use_container_width=True, config={"staticPlot": True})
 
@@ -136,11 +143,22 @@ fig = px.line(
 fig.update_layout(xaxis=dict(range=[0, 10]))
 fig.update_traces(line_color="#3dd56d")
 
+# AR
 fig.add_scatter(x=_x, y=AR, mode="lines", line=dict(color="orange", width=2), name="AR", showlegend=False)
-fig.add_scatter(x=_x, y=MR, mode="lines", line=dict(color="red", width=2), name="MR", showlegend=False)
-
 fig.add_scatter(x=[_x[max_ar]], y=[AR[max_ar]], mode="markers", marker=dict(color="orange", size=10), name="max AR", showlegend=False)
+fig.add_vline(x=_x[max_ar], line_width=1, line_dash="dash", line_color="orange", showlegend=False)
+
+# MR
+fig.add_scatter(x=_x, y=MR, mode="lines", line=dict(color="red", width=2), name="MR", showlegend=False)
 fig.add_scatter(x=[_x[max_mr]], y=[MR[max_mr]], mode="markers", marker=dict(color="red", size=10), name="max MR", showlegend=False)
+fig.add_vline(x=_x[max_mr], line_width=1, line_dash="dash", line_color="red", showlegend=False)
+
+# y=0
+fig.add_hline(y=0, line_width=1, line_color="white", showlegend=False)
+
+# max TR
+fig.add_vline(x=x[y.argmax()], line_width=1, line_dash="dash", line_color="#3dd56d", showlegend=False)
+fig.add_scatter(x=[x[y.argmax()]], y=[y.max()], mode="markers", marker=dict(color="#3dd56d", size=10), showlegend=False)
 
 st.plotly_chart(fig, use_container_width=True, config={"staticPlot": True})
 
