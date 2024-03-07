@@ -4,7 +4,22 @@ import streamlit as st
 from scipy.interpolate import lagrange
 
 
-def tangent(x, x_values, f):
+def tangent(
+    x: float, x_values: np.ndarray, f: callable
+) -> tuple[np.ndarray, np.ndarray]:
+    """Tečna v bodě x.
+
+    Args:
+    -----
+        x (float): bod, ve kterém chceme tečnu
+        x_values (np.ndarray): hodnoty x
+        f (callable): funkce
+
+    Returns:
+    --------
+        line (np.ndarray): tečna
+        slope_values (np.ndarray): hodnoty sklonu
+    """
     y = f(x)
     diff = sp.diff(f(sp.Symbol("x")), sp.Symbol("x"))
     f_prime = sp.lambdify(sp.Symbol("x"), diff)
@@ -44,7 +59,7 @@ def TC(a: float, b: float, c: float, d: float, x_max: int):
         c (float): _description_
         d (float): fixní náklady
         x_max (int): kam az vzkreslovat graf na ose x
-    
+
     Returns:
     --------
         x (np.ndarray): Q (od 0 do x_max)
@@ -55,21 +70,22 @@ def TC(a: float, b: float, c: float, d: float, x_max: int):
         min_mc (int): minimum mezních nákladů
         _x (np.ndarray): Q (omezené od 1 do x_max)
     """
+
     def f(x):
-        return a * x ** 3 + b * x ** 2 + c * x + d
-    
+        return a * x**3 + b * x**2 + c * x + d
+
     x = np.linspace(0, x_max, 10000)
     y = f(x)
     _x = np.linspace(1, x_max, 10000)
-    
-    AC = f(_x)/_x
+
+    AC = f(_x) / _x
     min_ac = AC.argmin()
-    
+
     diff = sp.diff(f(sp.Symbol("x")), sp.Symbol("x"))
     f_prime = sp.lambdify(sp.Symbol("x"), diff)
     MC = f_prime(_x)
     min_mc = MC.argmin()
-    
+
     return x, y, AC, min_ac, MC, min_mc, _x
 
 
@@ -83,7 +99,7 @@ def TR(a: float, b: float, c: float, x_max: int):
         b (float): _description_
         c (float): _description_
         x_max (int): kam az vzkreslovat graf na ose x
-    
+
     Returns:
     --------
         x (np.ndarray): Q (od 0 do x_max)
@@ -94,6 +110,7 @@ def TR(a: float, b: float, c: float, x_max: int):
         max_mr (int): maximum mezních výnosů
         _x (np.ndarray): Q (omezené od 1 do x_max)
     """
+
     def f(x):
         return a * x**3 + b * x**2 + c * x
 
@@ -108,5 +125,42 @@ def TR(a: float, b: float, c: float, x_max: int):
     f_prime = sp.lambdify(sp.Symbol("x"), diff)
     MR = f_prime(_x)
     max_mr = np.argmax(MR)
-    
+
     return x, y, AR, max_ar, MR, max_mr, _x
+
+
+def alhpa_m(x_point: float, f: callable) -> float:
+    """Úhel mezi tečnou a osou x.
+
+    Args:
+        x_point (float): bod, ve kterém chceme tečnu
+        f (callable): funkce
+
+    Returns:
+        float: úhel v radiánech
+    """
+    x = sp.Symbol("x")
+    f = f(x)
+
+    f_prime = sp.diff(f, x)
+    slope_at_point = f_prime.subs(x, x_point)
+
+    angle_radians = np.arctan2(abs(float(slope_at_point)), 1)
+
+    return angle_radians
+
+
+def alpha_a(x_point: float, f: callable) -> float:
+    """Úhel mezi spojnicí bodu x_point s počátkem a osou x.
+
+    Args:
+        x_point (float): bod, do kterého vedeme spojnici
+        f (callable): funkce
+
+    Returns:
+        float: úhel v radiánech
+    """
+    y_point = f(x_point)
+    radians = np.arctan2(y_point, x_point)
+
+    return radians

@@ -2,7 +2,7 @@
 
 ## Spuštění
 
-Nainstalování balíčků:
+Instalace knihoven:
 
 ```bash
 poetry install
