@@ -30,7 +30,7 @@ def page():
     x = np.linspace(0, solutions[-1], 10000)
     y = f(x)
 
-    point = st.number_input("Bod", min_value=0.0, max_value=solutions[-1], value=2.0, step=0.1)
+    point = st.number_input("Bod", min_value=0.0, max_value=solutions[-1], step=0.1)
 
     line = tangent(point, x, f)[0]
 
