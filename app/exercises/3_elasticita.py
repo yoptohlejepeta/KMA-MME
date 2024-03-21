@@ -86,3 +86,8 @@ def page():
         st.latex(
             "E_f = \\frac{Mf(x)}{Af(x)} = \\frac{f'(x)}{\\frac{f(x)}{x}} = \\frac{f'(x)}{f(x)} \\cdot x"
         )
+        st.markdown("""
+        - $|E_f| > 1$, pak řekneme, že je *funkce elastická*.
+        - $|E_f| < 1$, pak řekneme, že je *funkce neelastická*.
+        - $|E_f| = 1$, pak řekneme, že je *funkce jednotkově elastická*.
+        """)
