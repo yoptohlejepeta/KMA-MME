@@ -21,6 +21,7 @@ with st.sidebar:
     st.markdown("# [Mezní sklon](#sklon)")
     st.markdown("# [Veličiny celkové, průměrné a mezní](#veliciny)")
     st.markdown("# [Elasticita funkce](#elasticita)")
+    st.markdown("# [Pavučinový model](#pavucina)")
 
 
 directory = "app/exercises"

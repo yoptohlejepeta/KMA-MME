@@ -7,7 +7,7 @@ from utils import cobweb
 
 
 def page():
-    st.header("Dískrétní pavučinový model", anchor="pavucina")
+    st.header("Diskrétní pavučinový model", anchor="pavucina")
 
     def Q_dt(a, b, p_t):
         return a - b * p_t
