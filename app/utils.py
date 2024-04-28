@@ -1,6 +1,7 @@
 import numpy as np
 import sympy as sp
 import streamlit as st
+import pandas as pd
 from scipy.interpolate import lagrange
 
 
@@ -164,3 +165,39 @@ def alpha_a(x_point: float, f: callable) -> float:
     radians = np.arctan2(y_point, x_point)
 
     return radians
+
+
+def cobweb(Q_dt, Q_st, p_0, a, b, c, d, y):
+    """Diskrétní pavučinový model.
+
+    Args:
+        Q_dt: Funkce pro poptávku
+        Q_st: Funkce pro nabídku
+        p_0: _description_
+        a: parametr funkce poptávky
+        b: parametr funkce poptávky
+        c: parametr funkce nabídky
+        d: parametr funkce nabídky
+        y
+
+    Returns:
+        DataFrame: hodnoty p a q
+    """
+    q_0 = Q_dt(a, b, p_0)
+
+    q = []
+    p = [p_0]
+
+    for i in range(1, len(y)):
+        q_0 = Q_dt(a, b, p[-1])
+        q_1 = Q_st(c, d, p[-1])
+        q.append(q_0)
+        q.append(q_1)
+        p.append(p[-1])
+        if i == len(y) - 1:
+            break
+        p.append((q_1 - a) / -b)
+
+    df = pd.DataFrame({"P": p, "Q": q})
+
+    return df

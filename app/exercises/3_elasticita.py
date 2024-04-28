@@ -11,9 +11,9 @@ def page():
 
     col1, col2, col3 = st.columns(3)
 
-    a = col1.number_input("a", value=-1, key="a")
-    b = col2.number_input("b", value=1, key="b")
-    c = col3.number_input("c", value=4, key="c")
+    a = col1.number_input("$a$", value=-1, key="a")
+    b = col2.number_input("$b$", value=1, key="b")
+    c = col3.number_input("$c$", value=4, key="c")
 
     st.latex(f"f(x) = {a}x^2 + {b}x + {c}")
 
@@ -86,8 +86,10 @@ def page():
         st.latex(
             "E_f = \\frac{Mf(x)}{Af(x)} = \\frac{f'(x)}{\\frac{f(x)}{x}} = \\frac{f'(x)}{f(x)} \\cdot x"
         )
-        st.markdown("""
+        st.markdown(
+            """
         - $|E_f| > 1$, pak řekneme, že je *funkce elastická*.
         - $|E_f| < 1$, pak řekneme, že je *funkce neelastická*.
         - $|E_f| = 1$, pak řekneme, že je *funkce jednotkově elastická*.
-        """)
+        """
+        )
