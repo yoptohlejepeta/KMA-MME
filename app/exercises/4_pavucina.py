@@ -100,6 +100,34 @@ def page():
     #     )
     st.plotly_chart(fig, use_container_width=True, config={"staticPlot": True})
     
+    with st.expander("Řešení"):
+        st.write("Zadání:")
+        st.latex(r"""
+        \begin{align*}
+        Q_{D_t} &= a - bP_t \\
+        Q_{S_t} &= -c + dP_{t-1} \\
+        P_0 &= 3
+        \end{align*}
+        """)
+        st.write("Rovnovážný bod:")
+        st.latex(r"""
+        \begin{align*}
+        a - bP^* &= -c + dP^* \\
+        P^* &= \frac{a + c}{b + d} \\
+        Q^* &= a - bP^*
+        \end{align*}
+        """)
+        
+        st.write("Obecné řešení:")
+        st.latex(r"""
+        \begin{align*}
+        P_t &= k \cdot \lambda^t + P^* \\
+        \lambda &= -\frac{d}{b} \\
+        k &= P_0 - P^* \\
+        P_t &= (P_0 - P^*) \cdot \left(-\frac{d}{b}\right)^t + P^*
+        \end{align*}
+        """)
+    
     st.subheader("Spojitý model")
     
     def Q_d_t(m, n, p_t):

@@ -1,10 +1,14 @@
 import streamlit as st
 import plotly.express as px
 
-from utils import TC, TR
+from utils import TC, TR, TC_f, TR_f
 
 
 def page():
+    """
+    TODO: celkove naklady se neprotinaji
+    TODO: paprsky z pocatku
+    """
     st.header("Veličiny celkové, průměrné a mezní", anchor="veliciny")
     st.subheader("Celkové náklady")
 
@@ -33,10 +37,9 @@ def page():
         mode="lines",
         line=dict(color="orange", width=2),
         name="AC",
-        showlegend=False,
     )
     fig.add_scatter(
-        x=[ac_x[min_ac]],
+        x=[x[min_ac]],
         y=[AC[min_ac]],
         mode="markers",
         marker=dict(color="orange", size=10),
@@ -44,10 +47,20 @@ def page():
         showlegend=False,
     )
     fig.add_vline(
-        x=ac_x[min_ac],
+        x=x[min_ac],
         line_width=1,
         line_dash="dash",
         line_color="orange",
+        showlegend=False,
+    )
+
+    # paprsek z pocatku
+    fig.add_scatter(
+        x=[0, x[min_ac]],
+        y=[0, TC_f(a=a_tc, b=b_tc, c=c_tc, d=d_tc, x=x[min_ac])],
+        line_width=1,
+        line_dash="dash",
+        line=dict(color="grey", width=2),
         showlegend=False,
     )
 
@@ -58,7 +71,6 @@ def page():
         mode="lines",
         line=dict(color="red", width=2),
         name="MC",
-        showlegend=False,
     )
     fig.add_scatter(
         x=[ac_x[min_mc]],
@@ -107,7 +119,6 @@ def page():
         mode="lines",
         line=dict(color="orange", width=2),
         name="AR",
-        showlegend=False,
     )
     fig.add_scatter(
         x=[_x[max_ar]],
@@ -124,6 +135,16 @@ def page():
         line_color="orange",
         showlegend=False,
     )
+    
+    # paprsek z pocatku
+    fig.add_scatter(
+        x=[0, _x[max_ar]],
+        y=[0, TR_f(a=a_tr, b=b_tr, c=c_tr, x=_x[max_ar])],
+        line_width=1,
+        line_dash="dash",
+        line=dict(color="grey", width=2),
+        showlegend=False,
+    )
 
     # MR
     fig.add_scatter(
@@ -132,7 +153,6 @@ def page():
         mode="lines",
         line=dict(color="red", width=2),
         name="MR",
-        showlegend=False,
     )
     fig.add_scatter(
         x=[_x[max_mr]],
@@ -166,3 +186,15 @@ def page():
     )
 
     st.plotly_chart(fig, use_container_width=True, config={"staticPlot": True})
+    
+    with st.expander("Definice veličin:"):
+        st.markdown("""
+        - funkce *celkových veličin*, značíme $Tf$, je  
+        $$Tf = f(x)$$
+
+        - funkce *průměrných veličin*, značíme $Af$, je  
+        $$Af = \\frac{f(x)}{x}$$
+
+        - funkce *mezních veličin*, značíme $f'$, je  
+        $$Mf = \\frac{df(x)}{dx} = f'(x)$$
+        """)

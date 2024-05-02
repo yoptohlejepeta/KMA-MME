@@ -5,14 +5,17 @@ from utils import update_plot
 
 
 def page():
+    """
+    TODO: opravit popisky
+    """
     st.header("Ekonomická funkce a její sklon", anchor="sklon")
 
     col1, col2 = st.columns(2)
 
-    point = col1.slider("Sklon přímky", 10, 25, 10)
+    point = col1.slider("$f(A)$", 10, 25, 10)
     x_tangent = col2.slider("Tečna v bodě", 5, 15, 10)
 
-    x_values, y_values, f, tangent_line, slope_values = update_plot(point, x_tangent)
+    x_values, y_values, f, tangent_line, slope_values = update_plot(y_third=point, x_tangent=x_tangent)
 
     tecna = st.toggle(
         "Zobrazit tečnu",
@@ -21,7 +24,15 @@ def page():
     fig = px.line(
         x=x_values, y=y_values, labels={"x": "x", "y": "f(x)"}, template="simple_white"
     )
-    fig.update_layout(xaxis=dict(range=[0, 20]), yaxis=dict(range=[0, 20]))
+    fig.add_scatter(
+        x=[15],
+        y=[point],
+        mode="markers",
+        marker=dict(color="Orange", size=10),
+        name="A",
+    )
+
+    fig.update_layout(xaxis=dict(range=[0, 20]), yaxis=dict(range=[0, 25]))
     fig.update_traces(line_color="#3dd56d")
 
     if tecna:

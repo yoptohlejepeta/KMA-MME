@@ -49,6 +49,40 @@ def update_plot(y_third, x_tangent):
     return x_values, y_values, interp_func, tangent_line, slope_values
 
 
+def TC_f(a: float, b: float, c: float, d: float, x: float) -> float:
+    """Funkce celkových nákladů.
+
+    Args:
+    -----
+        a (float): parametr
+        b (float): parametr
+        c (float): parametr
+        d (float): fixní náklady
+        x (float): x
+
+    Returns:
+    --------
+        f (callable): TC
+    """
+    return a * x**3 + b * x**2 + c * x + d
+
+
+def TR_f(a: float, b: float, c: float, x: float) -> float:
+    """Funkce celkových výnosů.
+
+    Args:
+    -----
+        a (float): parametr
+        b (float): parametr
+        c (float): parametr
+        x (float): x
+
+    Returns:
+    --------
+        f (callable): TR
+    """
+    return a * x**3 + b * x**2 + c * x
+
 @st.cache_data(ttl=600, max_entries=10, show_spinner=True)
 def TC(a: float, b: float, c: float, d: float, x_max: int):
     """
@@ -59,7 +93,7 @@ def TC(a: float, b: float, c: float, d: float, x_max: int):
         b (float): _description_
         c (float): _description_
         d (float): fixní náklady
-        x_max (int): kam az vzkreslovat graf na ose x
+        x_max (int): kam az vykreslovat graf na ose x
 
     Returns:
     --------
@@ -71,20 +105,26 @@ def TC(a: float, b: float, c: float, d: float, x_max: int):
         min_mc (int): minimum mezních nákladů
         _x (np.ndarray): Q (omezené od 1 do x_max)
     """
-
+    
     def f(x):
         return a * x**3 + b * x**2 + c * x + d
+    
+    def f_prime(x):
+        return 3 * a * x**2 + 2 * b * x + c
 
-    x = np.linspace(0, x_max, 10000)
+    x = np.linspace(0, x_max, 1000)
     y = f(x)
-    _x = np.linspace(1, x_max, 10000)
+    _x = np.linspace(1, x_max, 1000)
 
     AC = f(_x) / _x
     min_ac = AC.argmin()
 
-    diff = sp.diff(f(sp.Symbol("x")), sp.Symbol("x"))
-    f_prime = sp.lambdify(sp.Symbol("x"), diff)
+    # sp_x = sp.Symbol("x")
+    # diff = sp.diff(f(sp_x), sp_x)
+    # f_prime = sp.lambdify(sp_x, diff)
+    # MC = f_prime(_x)
     MC = f_prime(_x)
+    
     min_mc = MC.argmin()
 
     return x, y, AC, min_ac, MC, min_mc, _x
