@@ -99,7 +99,7 @@ def TR(a: float, b: float, c: float, x_max: int):
         a (float): _description_
         b (float): _description_
         c (float): _description_
-        x_max (int): kam az vzkreslovat graf na ose x
+        x_max (int): kam az vykreslovat graf na ose x
 
     Returns:
     --------

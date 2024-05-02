@@ -17,11 +17,13 @@ def page():
 
     st.write("Celkové náklady jsou dány předpisem:")
     st.latex(f"TC = {a_tc}Q^3 + {b_tc}Q^2 + {c_tc}Q + {d_tc}")
+    
+    x_max1 = st.slider("Vykreslit graf do", min_value=1, max_value=100, value=10, key="x_max1")
 
-    x, y, AC, min_ac, MC, min_mc, ac_x = TC(a_tc, b_tc, c_tc, d_tc, 10)
+    x, y, AC, min_ac, MC, min_mc, ac_x = TC(a_tc, b_tc, c_tc, d_tc, x_max=x_max1)
 
     fig = px.line(x=x, y=y, labels={"x": "Q", "y": "TC(Q)"}, template="simple_white")
-    fig.update_layout(xaxis=dict(range=[0, 10]))
+    # fig.update_layout(xaxis=dict(range=[0, 10]))
     fig.update_traces(line_color="#3dd56d")
 
     # AC
@@ -89,11 +91,13 @@ def page():
 
     st.write("Celkové příjmy jsou dány předpisem:")
     st.latex(f"TR = {a_tr}Q^3 + {b_tr}Q^2 + {c_tr}Q")
+    
+    x_max2 = st.slider("Vykreslit graf do", min_value=1, max_value=100, value=10, key="x_max2")
 
-    x, y, AR, max_ar, MR, max_mr, _x = TR(a_tr, b_tr, c_tr, 10)
+    x, y, AR, max_ar, MR, max_mr, _x = TR(a_tr, b_tr, c_tr, x_max=x_max2)
 
     fig = px.line(x=x, y=y, labels={"x": "Q", "y": "TR(Q)"}, template="simple_white")
-    fig.update_layout(xaxis=dict(range=[0, 10]))
+    # fig.update_layout(xaxis=dict(range=[0, 10]))
     fig.update_traces(line_color="#3dd56d")
 
     # AR

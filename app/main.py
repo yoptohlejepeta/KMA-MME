@@ -9,8 +9,8 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
     layout="centered",
     menu_items={
-        "Get Help": "https://www.kma-mme.com",
-        "Report a bug": "https://www.kma-mme.com",
+        "Get Help": "https://www.get_help.com",
+        "Report a bug": "https://www.report_a_bug.com",
         "About": Path("About.md").read_text(),
     },
 )
