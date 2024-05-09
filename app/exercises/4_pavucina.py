@@ -106,7 +106,6 @@ def page():
         \begin{align*}
         Q_{D_t} &= a - bP_t \\
         Q_{S_t} &= -c + dP_{t-1} \\
-        P_0 &= 3
         \end{align*}
         """)
         st.write("Rovnovážný bod:")
@@ -158,7 +157,13 @@ def page():
     fig.update_traces(line=dict(color="#3dd56d"))
     fig.add_hline(y=p_opt, line_width=1, line_color="white", showlegend=False)
     
-    st.latex(f"Q_D(t) = {m} - {n}P(t) \pm {alpha} * \\frac{{dP(t)}}{{dt}}")
+    latex_code = f"""
+    \\begin{{align*}}
+    Q_D(t) &= {m} - {n}P(t) \pm {alpha} \\frac{{\\textrm{{d}}P(t)}}{{\\textrm{{d}}t}}
+    \end{{align*}}
+    """
+
+    st.latex(latex_code)
     st.latex(f"Q_S(t) = -{r} + {s}P(t)")
     st.latex(f"P_0 = {p0}")
     
@@ -169,3 +174,12 @@ def page():
     )
 
     st.plotly_chart(fig, use_container_width=True, config={"staticPlot": True})
+
+    with st.expander("Řešení"):
+        st.write("Zadání:")
+        st.latex(r"""
+        \begin{align*}
+        Q_D(t) &= m - nP(t) \pm \alpha \frac{\textrm{d}P(t)}{\textrm{d}t} \\
+        Q_S(t) &= -r + sP(t) \\
+        \end{align*}
+        """)
