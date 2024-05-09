@@ -5,9 +5,6 @@ from utils import update_plot
 
 
 def page():
-    """
-    TODO: opravit popisky
-    """
     st.header("Ekonomická funkce a její sklon", anchor="sklon")
 
     col1, col2 = st.columns(2)

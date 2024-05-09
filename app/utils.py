@@ -34,6 +34,19 @@ def tangent(
 
 @st.cache_data(ttl=600, max_entries=10, show_spinner=True)
 def update_plot(y_third, x_tangent):
+    """Funkce podle třetího zadaného y, interpoluje a vytvoří funkci.
+
+    Args:
+        y_third: Funkční hodnota třetího bodu
+        x_tangent: Bod, ve kterém chceme tečnu
+
+    Returns:
+        x_values: hodnoty x
+        y_values: hodnoty y
+        interp_func: interpolovaná funkce
+        tangent_line: tečna
+        slope_values: hodnoty sklonu
+    """
     x_points = [0, 3, 15]
     y_points = [0, 3]
 
@@ -89,10 +102,10 @@ def TC(a: float, b: float, c: float, d: float, x_max: int):
 
     Args:
     -----
-        a (float): _description_
-        b (float): _description_
-        c (float): _description_
-        d (float): fixní náklady
+        a (float): parametr
+        b (float): parametr
+        c (float): parametr
+        d (float): parametr (fixní náklady)
         x_max (int): kam az vykreslovat graf na ose x
 
     Returns:
@@ -119,10 +132,6 @@ def TC(a: float, b: float, c: float, d: float, x_max: int):
     AC = f(_x) / _x
     min_ac = AC.argmin()
 
-    # sp_x = sp.Symbol("x")
-    # diff = sp.diff(f(sp_x), sp_x)
-    # f_prime = sp.lambdify(sp_x, diff)
-    # MC = f_prime(_x)
     MC = f_prime(_x)
     
     min_mc = MC.argmin()

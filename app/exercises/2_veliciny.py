@@ -5,10 +5,6 @@ from utils import TC, TR, TC_f, TR_f
 
 
 def page():
-    """
-    TODO: celkove naklady se neprotinaji
-    TODO: paprsky z pocatku
-    """
     st.header("Veličiny celkové, průměrné a mezní", anchor="veliciny")
     st.subheader("Celkové náklady")
 
@@ -27,7 +23,6 @@ def page():
     x, y, AC, min_ac, MC, min_mc, ac_x = TC(a_tc, b_tc, c_tc, d_tc, x_max=x_max1)
 
     fig = px.line(x=x, y=y, labels={"x": "Q", "y": "TC(Q)"}, template="simple_white")
-    # fig.update_layout(xaxis=dict(range=[0, 10]))
     fig.update_traces(line_color="#3dd56d")
 
     # AC
@@ -109,7 +104,6 @@ def page():
     x, y, AR, max_ar, MR, max_mr, _x = TR(a_tr, b_tr, c_tr, x_max=x_max2)
 
     fig = px.line(x=x, y=y, labels={"x": "Q", "y": "TR(Q)"}, template="simple_white")
-    # fig.update_layout(xaxis=dict(range=[0, 10]))
     fig.update_traces(line_color="#3dd56d")
 
     # AR

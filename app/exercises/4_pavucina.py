@@ -33,12 +33,6 @@ def page():
     st.latex(f"Q_{{S_t}} = -{c} + {d}P_{{t-1}}")
 
     st.latex(f"P_0 = {p_0}")
-    # st.latex(f"P_t = k \cdot \lambda^t + P^*")
-    # opt values
-    # st.latex(f"""
-    #          Rovnovážný bod:
-    #          P^* = {opt_p}, Q^* = {opt_q}
-    #          """)
     st.markdown(
         f"""
         Rovnovážný bod: $[P^*, Q^*] = [{opt_p}, {opt_q}]$
